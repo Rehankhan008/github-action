@@ -10,11 +10,11 @@ on:
     branches: [ "main" ]
 jobs:
   trigger-test
-    runs-on: ubuntu-latest 
+    runs-on:ubuntu-latest
     steps:
-      -  name: trigger the automated test in another repo
-          uses: peter-evans/repository-dispatch@v2 
-          with: 
+      - name: trigger the automated test in another repo
+        uses: peter-evans/repository-dispatch@v2 
+        with: 
             token: ${{secrats.REPO_ACCESS_TOKEN}}
             repository: rehankhan008/react-project
             event-type:
