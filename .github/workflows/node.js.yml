@@ -8,17 +8,7 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-jobs:
-  trigger-test
-    runs-on:ubuntu-latest
-    steps:
-      - name: trigger the automated test in another repo
-        uses: peter-evans/repository-dispatch@v2 
-        with: 
-            token: ${{secrats.REPO_ACCESS_TOKEN}}
-            repository: rehankhan008/react-project
-            event-type:
-            client-payload: '{"github":${{ toJson(github) }}}'
+
 jobs:
   build:
 
@@ -38,4 +28,12 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
+
+    - name: trigger the automated test in another repo
+    - uses: peter-evans/repository-dispatch@v2 
+      with: 
+        token: ${{secrats.REPO_ACCESS_TOKEN}}
+        repository: rehankhan008/react-project
+        event-type: my-event
+        client-payload: '{"github":${{ toJson(github) }}}'
     
