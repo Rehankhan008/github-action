@@ -47,12 +47,22 @@ jobs:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         script: |
-            npm install 18
-            npm install -g pm2
+
+
+            curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+            sudo npm install -g pm2
             pm2 start npm --name "api" -- run start
-            git pull origin main 
-            npm install 
+            git pull origin main
+            npm install
             npm run build
             pm2 restart api
+            # npm install 18
+            # npm install -g pm2
+            # pm2 start npm --name "api" -- run start
+            # git pull origin main 
+            # npm install 
+            # npm run build
+            # pm2 restart api
             
     
