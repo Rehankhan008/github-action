@@ -34,4 +34,26 @@ jobs:
         repository: rehankhan008/react-project
         event-type: my-event
         client-payload: '{"github":${{ toJson(github) }}}'
+
+  deploy:
+    needs:[build]
+    run-on: ubuntu-latest
+
+    steps:
+    - name: SSH deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USER }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+            npm install 18
+            npm install -g pm2
+            pm2 start npm --name "api" -- run start
+            git pull origin main 
+            npm install 
+            npm run build
+            pm2 restart api
+            
     
