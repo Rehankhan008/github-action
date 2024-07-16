@@ -4,7 +4,7 @@
 name: CICD for Youtube
 
 on:
-  push:
+  pull_request:
     branches:
         - main
 
