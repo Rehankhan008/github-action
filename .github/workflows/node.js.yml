@@ -17,14 +17,27 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+
+    - uses: actions/checkout@v2
+    - name: Use node js
+      uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
+         node-version: ${{ matrix.node-version }}
+    - name: npm install and build
+      run: |
+          npm install
+          npm run build
+
+      env: 
+        CI: true   
+    # - uses: actions/checkout@v4
+    # - name: Use Node.js ${{ matrix.node-version }}
+    #   uses: actions/setup-node@v3
+    #   with:
+    #     node-version: ${{ matrix.node-version }}
+    #     cache: 'npm'
+    # - run: npm ci
+    # - run: npm run build --if-present
 
     - name: trigger the automated test in another repo
       uses: peter-evans/repository-dispatch@v2 
